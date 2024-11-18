@@ -1,0 +1,49 @@
+/* Basic styles for the table */
+table {
+    border-collapse: collapse;
+    margin: 20px auto;
+}
+
+td {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border: 2px solid #333; /* Increased border thickness and darker color for visibility */
+}
+
+.alive {
+    background-color: black;
+}
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: -30px;
+    margin-top: 20px;
+}
+button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+#resetBtn {
+    background-color: #f44336;
+}
+#resetBtn:hover{
+    background-color: #e53935;
+}
+#resetBtn:active{
+    background-color: #d32f2f;
+}
+button:active{
+    background-color: #3e8e41;
+}
