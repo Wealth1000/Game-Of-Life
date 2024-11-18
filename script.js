@@ -104,8 +104,6 @@ toggleAlive(grid);
 let gameInterval;
 
 startGameBtn.addEventListener('click', function () {
-    alert("Worked");
-    console.log("Start Button Clicked");
     clearInterval(gameInterval);
     gameInterval = setInterval(() => {
         const newState = calcNewGridState(grid);
