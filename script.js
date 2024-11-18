@@ -1,8 +1,15 @@
 const startGameBtn = document.getElementById('startBtn');
 const resetBtn = document.getElementById('resetBtn');
 const grid = document.getElementById('grid');
-const row = 35;
-const column = 70;
+function calculateGridDimensions() {
+    const cellSize = 20;
+    const buttonRowHeight = 12;
+    const rows = Math.floor((window.innerHeight / cellSize)) - buttonRowHeight;
+    const columns = Math.floor((window.innerWidth / cellSize));
+
+    return { rows, columns };
+}
+
 function createGrid(numRows, numCols) {
     grid.innerHTML = '';
     for (let row = 0; row < numRows; row++) {
@@ -81,8 +88,8 @@ function updateGrid(grid, newState) {
         }
     }
 }
-
-createGrid(row, column);
+const { rows, columns } = calculateGridDimensions();
+createGrid(rows, columns);
 toggleAlive(grid);
 let gameInterval;
 startGameBtn.addEventListener('click', function () {
@@ -96,4 +103,9 @@ resetBtn.addEventListener('click', function() {
     clearInterval(gameInterval);
     resetGrid(grid); 
     gameInterval = null;
+});
+window.addEventListener('resize', () => {
+    const { rows, columns } = calculateGridDimensions();
+    createGrid(rows, columns);
+    toggleAlive(grid);
 });
