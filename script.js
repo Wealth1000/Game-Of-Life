@@ -1,13 +1,15 @@
 const startGameBtn = document.getElementById('startBtn');
 const resetBtn = document.getElementById('resetBtn');
 const grid = document.getElementById('grid');
+
+let row;
+let column;
+
 function calculateGridDimensions() {
     const cellSize = 20;
     const buttonRowHeight = 12;
-    const rows = Math.floor((window.innerHeight / cellSize)) - buttonRowHeight;
-    const columns = Math.floor((window.innerWidth / cellSize));
-
-    return { rows, columns };
+    row = Math.floor((window.innerHeight / cellSize)) - buttonRowHeight;
+    column = Math.floor((window.innerWidth / cellSize));
 }
 
 function createGrid(numRows, numCols) {
@@ -22,24 +24,27 @@ function createGrid(numRows, numCols) {
         grid.appendChild(tr);
     }
 }
+
 function toggleAlive(grid) {
     const cells = grid.getElementsByTagName('td');
     for (let cell of cells) {
-        cell.addEventListener('click', function() {
-            cell.classList.toggle('alive'); 
+        cell.addEventListener('click', function () {
+            cell.classList.toggle('alive');
         });
     }
 }
+
 function resetGrid(grid) {
     const cells = grid.getElementsByTagName('td');
     for (let cell of cells) {
         cell.classList.remove('alive');
     }
 }
+
 function countLiveNeighbors(grid, rowIndex, colIndex) {
     const directions = [
         [-1, -1], [-1, 0], [-1, 1],
-        [0, -1],[0, 1],
+        [0, -1], [0, 1],
         [1, -1], [1, 0], [1, 1]
     ];
     let liveNeighbors = 0;
@@ -55,6 +60,7 @@ function countLiveNeighbors(grid, rowIndex, colIndex) {
     });
     return liveNeighbors;
 }
+
 function calcNewGridState(grid) {
     const newState = [];
     for (let rowIndex = 0; rowIndex < row; rowIndex++) {
@@ -76,6 +82,7 @@ function calcNewGridState(grid) {
 
     return newState;
 }
+
 function updateGrid(grid, newState) {
     for (let rowIndex = 0; rowIndex < row; rowIndex++) {
         for (let colIndex = 0; colIndex < column; colIndex++) {
@@ -88,24 +95,32 @@ function updateGrid(grid, newState) {
         }
     }
 }
-const { rows, columns } = calculateGridDimensions();
-createGrid(rows, columns);
+
+// Initialize the game
+calculateGridDimensions();
+createGrid(row, column);
 toggleAlive(grid);
+
 let gameInterval;
+
 startGameBtn.addEventListener('click', function () {
+    alert("Worked");
+    console.log("Start Button Clicked");
     clearInterval(gameInterval);
     gameInterval = setInterval(() => {
         const newState = calcNewGridState(grid);
         updateGrid(grid, newState);
     }, 500);
 });
-resetBtn.addEventListener('click', function() {
+
+resetBtn.addEventListener('click', function () {
     clearInterval(gameInterval);
-    resetGrid(grid); 
+    resetGrid(grid);
     gameInterval = null;
 });
+
 window.addEventListener('resize', () => {
-    const { rows, columns } = calculateGridDimensions();
-    createGrid(rows, columns);
+    calculateGridDimensions();
+    createGrid(row, column);
     toggleAlive(grid);
 });
